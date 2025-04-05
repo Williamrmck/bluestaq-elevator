@@ -1,0 +1,7 @@
+services:
+  backend:
+    image: elevator-backend:0.0
+    hostname: elevator-backend
+    build: ./
+    ports:
+      - "8080:8080"
