@@ -23,9 +23,14 @@ public class ElevatorRequestController {
 	@PostMapping(path = "/addExternalRequest", consumes = "application/json")
 	public String addExternalRequest(@RequestBody ElevatorRequest elevatorRequest)
 	{
-		LOGGER.info("REST request to call an elevator: " + elevatorRequest.floorRequestedAt + " Going: " + elevatorRequest.requestDirection);
-		this.simState.requests.add(elevatorRequest);
-		return "Accepted.";
+		LOGGER.info("REST request to call an elevator to floor: " + elevatorRequest.floorRequestedAt + " Going: " + elevatorRequest.requestDirection);
+		
+		if(this.simState.requests.contains(elevatorRequest)){
+			return "Rejected, already tasked with that request!";
+		}else{
+			this.simState.requests.add(elevatorRequest);
+			return "Accepted.";
+		}
 	}
 
 	@PostMapping(path = "/addInternalRequest/{elevatorId}", consumes = "application/json")

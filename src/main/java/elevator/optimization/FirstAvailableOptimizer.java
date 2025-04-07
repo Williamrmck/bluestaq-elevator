@@ -1,5 +1,8 @@
 package elevator.optimization;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import elevator.simulation.Elevator;
 import elevator.simulation.ElevatorRequest;
 import elevator.simulation.SimState;
@@ -12,9 +15,10 @@ public class FirstAvailableOptimizer extends AbstractOptimizer {
 
     @Override
     public void optimize(){
+        Queue<ElevatorRequest> currentRequests = new LinkedList<>(this.simState.requests);
 
         // For each elevator request, send it to an available elevator.
-        for(ElevatorRequest request : this.simState.requests){
+        for(ElevatorRequest request : currentRequests){
             boolean requestHandled = false;
             for (Elevator elevator : this.simState.elevators){
                 if(elevator.isIdle()){

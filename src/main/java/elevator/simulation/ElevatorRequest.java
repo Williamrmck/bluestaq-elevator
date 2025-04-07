@@ -15,4 +15,22 @@ public class ElevatorRequest {
 
     @JsonProperty
     public RequestDirection requestDirection;
+
+    @Override
+    public boolean equals(Object other){
+        if (other == null) {
+            return false;
+        }
+
+        if (other.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final ElevatorRequest otherElevatorRequest = (ElevatorRequest) other;
+
+        boolean equal = this.floorRequestedAt == otherElevatorRequest.floorRequestedAt;
+        equal &=        this.requestDirection == otherElevatorRequest.requestDirection;
+
+        return equal;
+    }
 }
