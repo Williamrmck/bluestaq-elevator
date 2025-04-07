@@ -31,7 +31,7 @@ public class SimLoop {
         lastRunTime = LocalDateTime.now();
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRateString = "${sim.deltaTime}")
     public void executeTimestep(){
         // Get the current time and figure out how much time has actually elapsed since our last timestep.
         LocalDateTime currentTime = LocalDateTime.now();

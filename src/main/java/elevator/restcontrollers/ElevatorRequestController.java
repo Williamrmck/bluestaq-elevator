@@ -41,7 +41,7 @@ public class ElevatorRequestController {
 	}
 
 	@GetMapping("/simState")
-	public String helloWorld() {
+	public String returnSimState() {
 		StringBuilder response = new StringBuilder();
 
 		return response.toString();

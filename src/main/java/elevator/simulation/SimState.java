@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.PostConstruct;
@@ -16,19 +17,31 @@ public class SimState {
 
     static final Logger LOGGER = Logger.getLogger(SimState.class.getName());
 
-    private int elevatorCount = 4;
+    @Value("${sim.elevatorCount}")
+    private int elevatorCount;
+
+    @Value("${sim.bottomFloor}")
+    private int bottomFloor;
+
+    @Value("${sim.topFloor}")
+    private int topFloor;
+
+    @Value("${elevator.maxVelocity}")
+    private double maxVelocity = 0.5; // Floors per second
+    
+    @Value("${elevator.floorEpsilon}")
+    private double epsilon = 0.01; // Distance to snap to a floor
     
     public List<Elevator> elevators;
     public Queue<ElevatorRequest> requests;
-
 
     @PostConstruct
     public void initializeElevators(){
         this.requests = new LinkedList<>();
         this.elevators = new ArrayList<>();
 
-        for (int index = 0; index < elevatorCount; index++){
-            Elevator elevator = new Elevator();
+        for (int index = 0; index < this.elevatorCount; index++){
+            Elevator elevator = new Elevator(this.bottomFloor, this.topFloor, this.maxVelocity, this.epsilon);
 
             this.elevators.add(elevator);
         }
