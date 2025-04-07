@@ -2,16 +2,14 @@ package elevator.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import elevator.optimization.AbstractOptimizer;
-import elevator.optimization.FirstAvailableOptimizer;
-import elevator.optimization.OptimizationService;
-import elevator.simulation.Elevator;
 import jakarta.annotation.PostConstruct;
+
 
 @Repository
 public class SimState {
@@ -21,25 +19,23 @@ public class SimState {
     private int elevatorCount = 4;
     
     public List<Elevator> elevators;
+    public Queue<ElevatorRequest> requests;
 
-    @Autowired
-    private OptimizationService optimizationService;
 
     @PostConstruct
     public void initializeElevators(){
-        elevators = new ArrayList<>();
+        this.requests = new LinkedList<>();
+        this.elevators = new ArrayList<>();
 
         for (int index = 0; index < elevatorCount; index++){
             Elevator elevator = new Elevator();
 
-            elevators.add(elevator);
+            this.elevators.add(elevator);
         }
     }
 
     public void executeTimestep(long milliseconds){
-        optimizationService.optimize();
-
-        for(Elevator elevator : elevators){
+        for(Elevator elevator : this.elevators){
             elevator.updateState(milliseconds);
         }
 

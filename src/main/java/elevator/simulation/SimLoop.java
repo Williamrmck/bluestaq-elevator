@@ -7,6 +7,9 @@ import java.time.Duration;
 import jakarta.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
+
+import elevator.optimization.OptimizationService;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +22,9 @@ public class SimLoop {
 
     @Autowired
     private SimState simState;
+
+    @Autowired
+    private OptimizationService optimizationService;
 
     @PostConstruct
     public void resetSimulation(){
@@ -33,6 +39,8 @@ public class SimLoop {
         long timestepLength = timestepDuration.toMillis(); // Milliseconds
 
         simState.executeTimestep(timestepLength);
+
+        optimizationService.optimize();
 
         LOGGER.info("STEP: " + timestepLength);
 

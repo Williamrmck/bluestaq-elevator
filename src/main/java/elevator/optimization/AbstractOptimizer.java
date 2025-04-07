@@ -11,7 +11,7 @@ public abstract class AbstractOptimizer {
 
     static final Logger LOGGER = Logger.getLogger(AbstractOptimizer.class.getName());
 
-    private SimState simState;
+    protected SimState simState;
 
     public AbstractOptimizer(SimState simState){
         this.simState = simState;
