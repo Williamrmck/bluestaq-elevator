@@ -1,6 +1,6 @@
 package elevator.simulation;
 
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Logger;
 
@@ -18,7 +18,7 @@ public class Elevator{
     private double maxVelocity = 0.5; // Floors per second
     private double epsilon = 0.01; // Distance to snap to a floor
 
-    private Queue<Integer> destinations = new PriorityQueue<Integer>();
+    private Queue<Integer> destinations = new LinkedList<Integer>();
 
     private Elevator(){
         // Disable default constructor, we need initialization data from application properties
@@ -42,6 +42,7 @@ public class Elevator{
         double heightDecimal = this.height - (int) this.height;
         if(Math.abs(heightDecimal) < this.epsilon ){
             this.height = (int) this.height;
+            this.arrivedAtFloor((int) this.height);
         }
 
         this.velocityUp = calculateVelocity(milliseconds);
@@ -59,7 +60,12 @@ public class Elevator{
         this.destinations.add(floor);
     }
 
-    //
+    private void arrivedAtFloor(int floor){
+        // ToDo add delay
+        this.destinations.remove(floor);
+    }
+
+    // Checks if it has no tasking
     public boolean isIdle(){
         return this.destinations.size() == 0;
     }
