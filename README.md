@@ -36,9 +36,10 @@ From a software stack perspective, the elevator simulation is a monolithic RESTf
 - Increased modularity with the Bean containers
 - Ease of configuration, 
 - Built-in capabilities such as Jackson, Tomcat, and scheduling tasks
+
 This architecture lends itself well to a modular backend microservice. A frontend GUI was planned, but not implemented. Additionally, a simulation driver to automatically simulate elevator usage was planned. These two features would be separate microservices to allow the backend to still be used. No plans for a data microservice (such as a database) was planned, since that seemed to have no minimal benefits beyond the stored elevator state in the backend.
 
-From a modeling and simulation perspective, the elevator simulation is a time-based, continuous simulation. The elevators are stepped forward in time via a time-based simulation loop and the state is not strictly discrete. Time-based was chosen over an event-based simulation, partially to simplify the simulation component of the project and partially because event-based simulations are more challenging to make realtime. The physics loop is soft-realtime, and will likely lead to "bad" simulation results if the time it takes to calculate a physics step is longer than the allocated time for the scheduler. That being said, the time step function does attempt to change the calculated delta-time to match the wall clock delta time, making it a somewhat robust soft-realtime simulation.
+From a modeling and simulation perspective, the elevator simulation is characterized as a time-stepped, continuous state simulation. The elevators are stepped forward in time via a time-based simulation loop and the state is not strictly discrete. Time-based was chosen over an event-based simulation, partially to simplify the simulation component of the project and partially because event-based simulations are more challenging to make realtime. The physics loop is soft-realtime, and will likely lead to "bad" simulation results if the time it takes to calculate a physics step is longer than the allocated time for the scheduler. That being said, the time step function does attempt to change the calculated delta-time to match the wall clock delta time, making it a somewhat robust soft-realtime simulation.
 
 ## Building JARs
 
