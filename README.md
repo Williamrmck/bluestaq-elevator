@@ -9,17 +9,22 @@ As such, building is done within a docker container and deployment is done with 
 ## Building
 Code building is performed via a docker builder image. 
 With docker and the compose plugin installed, building is as easy as:
-` docker compose build
+```
+ docker compose build
+ ```
 
 
 ## Deployment
 
 After the build process, the elevator simulation can be run with:
-` docker compose up
+```
+docker compose up
+```
 
 ## Usage
 
 The Swagger/OpenAPI REST endpoint can be accessed via the following URL:
+
 http://localhost:8080/swagger-ui/index.html
 
 Currently the Swagger endpoint is the primary way to interface with the service. The applications.properties file contains the initialization parameters for the simulation, however it is baked into the docker image and either the image must be re-built or the file must be overwritten with "docker cp".
